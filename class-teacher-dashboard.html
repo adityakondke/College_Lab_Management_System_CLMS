@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Class Teacher Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#f4f6f9;
+  color:#222;
+}
+
+.header{
+  background:linear-gradient(90deg,#0b3d6d,#14508f);
+  color:white;
+  padding:16px;
+  text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.15);
+}
+
+.header h2{
+  margin:0;
+  font-size:26px;
+  letter-spacing:0.5px;
+}
+
+.container{
+  display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:230px;
+  min-height:100vh;
+  background:#1e2a38;
+  position:fixed;
+  left:0;
+  top:0;
+  padding-top:90px;
+  box-shadow:3px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar a{
+  display:block;
+  color:white;
+  text-decoration:none;
+  padding:14px 22px;
+  margin:6px 10px;
+  border-radius:8px;
+  transition:0.25s;
+  font-size:15px;
+  font-weight:500;
+  cursor:pointer;
+}
+
+.sidebar a:hover{
+  background:#0b3d6d;
+  padding-left:28px;
+}
+
+/* MAIN */
+
+.main{
+  margin-left:230px;
+  width:calc(100% - 230px);
+  padding:25px;
+}
+
+/* CARD */
+
+.card{
+  background:white;
+  border-radius:12px;
+  padding:22px;
+  margin-bottom:25px;
+  box-shadow:0 3px 12px rgba(0,0,0,0.08);
+  transition:0.25s;
+}
+
+.card:hover{
+  box-shadow:0 5px 18px rgba(0,0,0,0.12);
+}
+
+.card h3{
+  margin-top:0;
+  margin-bottom:18px;
+  color:#0b3d6d;
+}
+
+/* UPLOAD FORM */
+
+.upload-area{
+  border:2px dashed #0b3d6d;
+  border-radius:8px;
+  padding:30px;
+  text-align:center;
+  background:#f9fbff;
+  transition:0.25s;
+  cursor:pointer;
+}
+
+.upload-area:hover{
+  background:#eef4ff;
+  border-color:#07294d;
+}
+
+.upload-area.dragover{
+  background:#dfe8ff;
+  border-color:#07294d;
+}
+
+.upload-area input[type="file"]{
+  display:none;
+}
+
+.upload-area p{
+  margin:10px 0;
+  color:#666;
+  font-size:14px;
+}
+
+.upload-area .file-icon{
+  font-size:48px;
+  margin:10px 0;
+}
+
+/* BUTTONS */
+
+input,
+select,
+button{
+  padding:11px 18px;
+  border:none;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.25s;
+}
+
+input[type="file"]{
+  padding:8px 12px;
+}
+
+button{
+  background:#0b3d6d;
+  color:white;
+}
+
+button:hover{
+  background:#07294d;
+  transform:translateY(-1px);
+}
+
+button.delete-btn{
+  background:#d32f2f;
+  padding:8px 12px;
+  font-size:12px;
+  margin-top:5px;
+}
+
+button.delete-btn:hover{
+  background:#b71c1c;
+}
+
+button.delete-all-btn{
+  background:#d32f2f;
+  width:100%;
+  margin:15px 0;
+  padding:12px;
+}
+
+button.delete-all-btn:hover{
+  background:#b71c1c;
+}
+
+/* TABLE */
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+  background:white;
+}
+
+th{
+  background:#0b3d6d;
+  color:white;
+  padding:12px;
+  text-align:center;
+  font-size:14px;
+}
+
+td{
+  border:1px solid #ddd;
+  padding:12px;
+  text-align:center;
+  font-size:14px;
+  color:#222;
+}
+
+tr:nth-child(even){
+  background:#f8fafc;
+}
+
+tr:hover{
+  background:#eef4ff;
+}
+
+/* ALERTS */
+
+.alert{
+  padding:12px 16px;
+  border-radius:8px;
+  margin-bottom:15px;
+  font-weight:500;
+}
+
+.alert-success{
+  background:#c8e6c9;
+  color:#2e7d32;
+  border-left:4px solid #2e7d32;
+}
+
+.alert-error{
+  background:#ffcdd2;
+  color:#c62828;
+  border-left:4px solid #c62828;
+}
+
+.alert-info{
+  background:#bbdefb;
+  color:#1565c0;
+  border-left:4px solid #1565c0;
+}
+
+/* PROGRESS */
+
+.progress-container{
+  margin:15px 0;
+  display:none;
+}
+
+.progress-bar{
+  width:100%;
+  height:25px;
+  background:#e0e0e0;
+  border-radius:8px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,#0b3d6d,#14508f);
+  width:0%;
+  transition:width 0.3s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+  .sidebar{
+    width:100%;
+    height:auto;
+    position:relative;
+    padding-top:15px;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .container{
+    flex-direction:column;
+  }
+
+  .upload-area{
+    padding:20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h2>Class Teacher Dashboard</h2>
+</div>
+
+<div class="container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <a onclick="showSection('upload')">
+      Upload Timetable
+    </a>
+
+    <a onclick="showSection('viewTT'); setTimeout(loadTimetable,100);">
+      View Timetable
+    </a>
+
+    <a onclick="showSection('bookLab')">
+  Book Lab
+</a>
+
+<a onclick="showSection('reportIssue')">
+  Report Issue
+</a>
+
+<a onclick="showSection('labTT')">
+  Lab Timetable
+</a>
+
+    <a onclick="showSection('editTT'); setTimeout(loadEditTable,100);">
+      Edit Timetable
+    </a>
+
+    <a onclick="showSection('deleteTT');">
+      Delete Timetable
+    </a>
+
+    <a href="/CLMS/LogoutServlet">
+      Logout
+    </a>
+
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- UPLOAD TIMETABLE -->
+    <div id="upload" class="card">
+
+      <h3>Upload Timetable</h3>
+
+      <div id="uploadMessage"></div>
+
+      <form id="uploadForm" enctype="multipart/form-data">
+
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click();">
+          <div class="file-icon">📁</div>
+          <p><strong>Click to select file or drag and drop</strong></p>
+          <p>Supported formats: .xlsx, .xls</p>
+          <input type="file" id="fileInput" name="timetableFile" accept=".xlsx,.xls" required>
+        </div>
+
+        <div class="progress-container" id="progressContainer">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill">0%</div>
+          </div>
+        </div>
+
+        <button type="submit" style="width:100%; margin-top:15px;">
+          Upload Timetable
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- VIEW TIMETABLE -->
+    <div id="viewTT" class="card" style="display:none;">
+
+      <h3>Current Timetable</h3>
+
+      <div id="ttTable"></div>
+
+    </div>
+
+    <!-- BOOK LAB -->
+    <div id="bookLab" class="card" style="display:none;">
+
+      <h3>Book Lab</h3>
+
+      <input type="date" id="bookDate" required>
+
+      <select id="bookSlot" required>
+
+        <option value="">Select Slot</option>
+
+        <option value="SLOT1">
+          10:15 AM - 12:15 PM
+        </option>
+
+        <option value="SLOT2">
+          1:15 PM - 3:15 PM
+        </option>
+
+        <option value="SLOT3">
+          3:30 PM - 5:30 PM
+        </option>
+
+      </select>
+
+      <button type="button" onclick="checkAvailability()">
+        Check Availability
+      </button>
+
+      <div id="labStatus" style="margin-top:15px;"></div>
+
+      <form id="labForm" style="margin-top:15px;">
+
+        <select name="lab" id="labSelect" required>
+          <option value="">Select Lab</option>
+        </select>
+
+        <button type="submit">
+          Book Selected Lab
+        </button>
+
+      </form>
+
+      <div id="bookingResult"></div>
+
+      <hr style="margin-top:30px;">
+
+      <h3>Current Active Bookings</h3>
+
+      <div id="activeBookings"></div>
+
+    </div>
+
+    <!-- REPORT ISSUE -->
+    <div id="reportIssue" class="card" style="display:none;">
+
+<h3>Report Issue</h3>
+
+<form id="issueForm">
+
+<!-- LAB -->
+
+<select id="issueLab" required>
+
+<option value="">Select Lab</option>
+
+</select>
+
+<!-- SYSTEM NO -->
+
+<input
+type="text"
+id="systemNo"
+placeholder="Enter System Number"
+required
+>
+
+<!-- ISSUE TYPE -->
+
+<select id="issueType" required>
+
+<option value="">Select Issue</option>
+
+<option>Keyboard or mouse not working/missing</option>
+
+<option>Computer is not starting</option>
+
+<option>Internet Connectivity Issue</option>
+
+<option>System running very slow or hanging</option>
+
+<option>System showing virus & malware problems</option>
+
+<option>System restarting automatically</option>
+
+<option>Monitor display issue</option>
+
+<option>Power issue in the lab</option>
+
+<option>Cable is broken</option>
+
+<option>Printer not working</option>
+
+<option value="OTHER">Other Issue</option>
+
+</select>
+
+<!-- CUSTOM ISSUE -->
+
+<textarea
+id="customIssue"
+placeholder="Type custom issue here..."
+style="display:none;"
+></textarea>
+
+<button type="submit">
+Submit Issue
+</button>
+
+</form>
+
+<hr style="margin:30px 0;">
+
+<h3>My Reported Issues</h3>
+
+<div id="facultyIssueTable"></div>
+
+</div>
+
+<!-- LAB TIMETABLE -->
+    <div id="labTT" class="card" style="display:none;">
+
+      <h3>Lab Timetable</h3>
+
+      <select id="labTTDropdown">
+        <option value="">Select Lab</option>
+      </select>
+
+      <button type="button" onclick="loadLabTimetable()">
+        Generate Timetable
+      </button>
+
+      <br><br>
+
+      <div id="labTTResult"></div>
+
+      <br>
+
+      <button type="button" onclick="showLabFree()">
+        Lab Free
+      </button>
+
+      <button type="button" onclick="showLabBusy()">
+        Lab Busy
+      </button>
+
+      <br><br>
+
+      <div id="labStatusResult"></div>
+
+    </div>
+
+    <!-- EDIT TIMETABLE -->
+    <div id="editTT" class="card" style="display:none;">
+
+      <h3>Edit Timetable Entries</h3>
+
+      <div id="editTable"></div>
+
+    </div>
+
+    <!-- DELETE TIMETABLE -->
+    <div id="deleteTT" class="card" style="display:none;">
+
+      <h3>Delete Timetable</h3>
+
+      <h4 style="color:#d32f2f; margin-top:0;">
+  Delete Entire Timetable
+</h4>
+
+<p style="color:#666; font-size:13px;">
+  This will delete all timetable entries. This action cannot be undone.
+</p>
+
+<button
+  type="button"
+  class="delete-all-btn"
+  onclick="if(confirm('Are you sure you want to delete the entire timetable?')) deleteEntireTimetable();">
+
+  ⚠️ Delete All Entries </button>
+    
+</div>
+</div>
+
+<!-- SHOW SECTION -->
+<script>
+function showSection(id) {
+  document.getElementById("upload").style.display = "none";
+  document.getElementById("viewTT").style.display = "none";
+  document.getElementById("bookLab").style.display = "none";
+  document.getElementById("reportIssue").style.display = "none";
+  document.getElementById("labTT").style.display = "none";
+  document.getElementById("editTT").style.display = "none";
+  document.getElementById("deleteTT").style.display = "none";
+  document.getElementById(id).style.display = "block";
+}
+
+// Show upload section on load
+window.addEventListener('DOMContentLoaded', function() {
+  showSection('upload');
+});
+</script>
+
+<!-- FILE UPLOAD HANDLING -->
+<script>
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('fileInput');
+const uploadForm = document.getElementById('uploadForm');
+
+// Drag and drop events
+uploadArea.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadArea.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', () => {
+  uploadArea.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadArea.classList.remove('dragover');
+  fileInput.files = e.dataTransfer.files;
+});
+
+fileInput.addEventListener('change', function() {
+  const file = this.files[0];
+  if (file) {
+    // Validate file type
+    if (!file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')) {
+      showMessage('Only Excel files (.xlsx or .xls) are allowed. JPG and PNG files are not supported.', 'error');
+      fileInput.value = '';
+      return;
+    }
+    // Validate file size (max 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      showMessage('File size exceeds 10MB limit.', 'error');
+      fileInput.value = '';
+      return;
+    }
+  }
+});
+
+uploadForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const file = fileInput.files[0];
+  if (!file) {
+    showMessage('Please select a file', 'error');
+    return;
+  }
+
+  // Show progress
+  document.getElementById('progressContainer').style.display = 'block';
+  const progressFill = document.getElementById('progressFill');
+
+  const formData = new FormData(uploadForm);
+  const xhr = new XMLHttpRequest();
+
+  xhr.upload.addEventListener('progress', function(e) {
+    if (e.lengthComputable) {
+      const percentComplete = Math.round((e.loaded / e.total) * 100);
+      progressFill.style.width = percentComplete + '%';
+      progressFill.textContent = percentComplete + '%';
+    }
+  });
+
+  xhr.addEventListener('load', function() {
+    document.getElementById('progressContainer').style.display = 'none';
+    
+    try {
+      const response = JSON.parse(xhr.responseText);
+      
+      if (response.status === 'success') {
+        showMessage('✓ ' + response.message, 'success');
+        fileInput.value = '';
+        progressFill.style.width = '0%';
+        progressFill.textContent = '0%';
+        setTimeout(() => {
+          loadTimetable();
+          showSection('viewTT');
+        }, 1000);
+      } else {
+        showMessage('Upload failed: ' + response.message, 'error');
+      }
+    } catch (e) {
+      // Show the actual response for debugging
+      console.error('JSON Parse Error:', e);
+      console.error('Response Text:', xhr.responseText);
+      showMessage('Server error: ' + xhr.responseText, 'error');
+    }
+  });
+
+  xhr.addEventListener('error', function() {
+    showMessage('Upload error. Please try again.', 'error');
+    document.getElementById('progressContainer').style.display = 'none';
+  });
+
+  xhr.open('POST', '/CLMS/UploadTimetableServlet');
+  xhr.send(formData);
+});
+</script>
+
+<!-- LOAD TIMETABLE -->
+<script>
+function loadTimetable() {
+  fetch("/CLMS/ViewTimetableServlet")
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        document.getElementById("ttTable").innerHTML = '<p style="color:red;">Error: ' + data.error + '</p>';
+        return;
+      }
+
+      let html = '<table>';
+      html += '<tr><th>Date</th><th>Day</th><th>Slot</th><th>Batch</th><th>Course</th><th>Faculty</th><th>Lab</th></tr>';
+
+      for (let dateKey in data.data) {
+        const [date, day] = dateKey.split('|');
+        const slots = data.data[dateKey];
+
+        for (let slot in slots) {
+          const entries = slots[slot];
+          for (let entry of entries) {
+            html += '<tr>';
+            html += '<td>' + date + '</td>';
+            html += '<td>' + day + '</td>';
+            html += '<td>' + slot + '</td>';
+            html += '<td>' + entry.batch + '</td>';
+            html += '<td>' + entry.course_name + '</td>';
+            html += '<td>' + entry.faculty_code + '</td>';
+            html += '<td>' + entry.lab_name + '</td>';
+            html += '</tr>';
+          }
+        }
+      }
+
+      html += '</table>';
+      document.getElementById("ttTable").innerHTML = html;
+    })
+    .catch(err => {
+      document.getElementById("ttTable").innerHTML = '<p style="color:red;">Error loading timetable</p>';
+    });
+}
+</script>
+
+<!-- EDIT TIMETABLE -->
+<script>
+function loadEditTable() {
+  fetch("/CLMS/ViewTimetableServlet")
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        document.getElementById("editTable").innerHTML = '<p style="color:red;">Error: ' + data.error + '</p>';
+        return;
+      }
+
+      let html = '<table>';
+      html += '<tr><th>Date</th><th>Day</th><th>Slot</th><th>Batch</th><th>Course</th><th>Faculty</th><th>Lab</th><th>Action</th></tr>';
+
+      for (let dateKey in data.data) {
+        const [date, day] = dateKey.split('|');
+        const slots = data.data[dateKey];
+
+        for (let slot in slots) {
+          const entries = slots[slot];
+          for (let entry of entries) {
+            html += '<tr>';
+            html += '<td>' + date + '</td>';
+            html += '<td>' + day + '</td>';
+            html += '<td>' + slot + '</td>';
+            html += '<td><input type="text" value="' + entry.batch + '" id="batch_' + entry.id + '" style="width:100%; padding:5px;"></td>';
+            html += '<td><input type="text" value="' + entry.course_name + '" id="course_' + entry.id + '" style="width:100%; padding:5px;"></td>';
+            html += '<td><input type="text" value="' + entry.faculty_code + '" id="faculty_' + entry.id + '" style="width:100%; padding:5px;"></td>';
+            html += '<td><input type="text" value="' + entry.lab_name + '" id="lab_' + entry.id + '" style="width:100%; padding:5px;"></td>';
+            html += '<td style="display:flex;gap:8px;justify-content:center;">';
+
+            html += '<button type="button" ' +
+            'style="background:#0b3d6d;color:white;padding:8px 14px;border:none;border-radius:6px;cursor:pointer;" ' +
+            'onclick="editEntry(' + entry.id + ')">Save</button>';
+
+            html += '<button type="button" class="delete-btn" ' +
+            'style="background:#d32f2f;color:white;padding:8px 14px;border:none;border-radius:6px;cursor:pointer;" ' +
+            'onclick="deleteEntry(' + entry.id + ')">Delete</button>';
+
+            html += '</td>';
+          }
+        }
+      }
+
+      html += '</table>';
+      document.getElementById("editTable").innerHTML = html;
+    })
+    .catch(err => {
+      document.getElementById("editTable").innerHTML = '<p style="color:red;">Error loading timetable</p>';
+    });
+}
+
+function editEntry(id) {
+  const batch = document.getElementById('batch_' + id).value;
+  const course = document.getElementById('course_' + id).value;
+  const faculty = document.getElementById('faculty_' + id).value;
+  const lab = document.getElementById('lab_' + id).value;
+
+  fetch('/CLMS/EditTimetableEntryServlet', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'id=' + id + '&batch=' + encodeURIComponent(batch) + '&course_name=' + encodeURIComponent(course) + 
+          '&faculty_code=' + encodeURIComponent(faculty) + '&lab_name=' + encodeURIComponent(lab)
+  })
+  .then(res => res.text())
+  .then(data => {
+    showMessage('Entry updated successfully', 'success');
+    loadEditTable();
+  })
+  .catch(err => {
+    showMessage('Error updating entry', 'error');
+  });
+}
+</script>
+
+
+<!-- SHOW MESSAGE -->
+<script>
+function showMessage(msg, type) {
+  const messageDiv = document.getElementById('uploadMessage');
+  messageDiv.innerHTML = '<div class="alert alert-' + type + '">' + msg + '</div>';
+  setTimeout(() => {
+    messageDiv.innerHTML = '';
+  }, 5000);
+}
+</script>
+<!-- LOAD LABS -->
+<script>
+
+function loadLabs() {
+
+    fetch('/CLMS/GetLabsServlet')
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        // REPORT ISSUE DROPDOWN
+        const issueLab =
+            document.getElementById("issueLab");
+
+        issueLab.innerHTML =
+            "<option value=''>Select Lab</option>";
+
+        data.forEach(lab => {
+
+            issueLab.innerHTML +=
+            `<option value="${lab}">
+                ${lab}
+            </option>`;
+        });
+
+    })
+
+    .catch(err => {
+
+        console.log(err);
+    });
+}
+
+loadLabs();
+
+</script>
+
+<!-- LOAD LAB TIMETABLE DROPDOWN -->
+<script>
+
+function loadLabTTDropdown() {
+
+    fetch('/CLMS/GetLabsServlet')
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        const dropdown =
+            document.getElementById('labTTDropdown');
+
+        dropdown.innerHTML =
+            "<option value=''>Select Lab</option>";
+
+        data.forEach(lab => {
+
+            dropdown.innerHTML +=
+            `<option value="${lab}">
+                ${lab}
+            </option>`;
+        });
+    });
+}
+
+loadLabTTDropdown();
+
+</script>
+
+<!-- CHECK AVAILABILITY -->
+<script>
+function checkAvailability() {
+
+  const date = document.getElementById("bookDate").value;
+  const slot = document.getElementById("bookSlot").value;
+
+  if (!date || !slot) {
+
+    alert("Select date and slot first");
+    return;
+  }
+
+  fetch(`/CLMS/CheckAvailabilityServlet?date=${date}&slot=${slot}`)
+
+    .then(res => res.json())
+
+    .then(data => {
+
+      const labStatus =
+        document.getElementById("labStatus");
+
+      const labSelect =
+        document.getElementById("labSelect");
+
+      labStatus.innerHTML = "";
+
+      labSelect.innerHTML =
+        "<option value=''>Select Lab</option>";
+
+      if (data.length > 0 && data[0].error) {
+        labStatus.innerHTML =
+          `<div style="color:red;font-weight:bold;">${escapeHtml(data[0].error)}</div>`;
+        return;
+      }
+
+      data.forEach(lab => {
+
+        if (lab.available) {
+
+          labStatus.innerHTML +=
+            `<div style="color:green;font-weight:bold;">
+              ✅ ${escapeHtml(lab.name)}
+            </div>`;
+
+          labSelect.innerHTML +=
+            `<option value="${escapeHtml(lab.name)}">
+              ${escapeHtml(lab.name)}
+            </option>`;
+
+        } else {
+
+          const reason = lab.reason ? ` (${escapeHtml(lab.reason)})` : '';
+
+          labStatus.innerHTML +=
+            `<div style="color:red;font-weight:bold;">
+              ❌ ${escapeHtml(lab.name)}${reason}
+            </div>`;
+        }
+      });
+
+    })
+
+    .catch(err => {
+
+      document.getElementById("labStatus").innerHTML =
+        '<div style="color:red;font-weight:bold;">Error checking availability</div>';
+    });
+}
+</script>
+
+<!-- FINAL BOOK -->
+<script>
+
+document.getElementById("labForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const selectedLab =
+        document.getElementById("labSelect").value;
+
+    const selectedDate =
+        document.getElementById("bookDate").value;
+
+    const selectedSlot =
+        document.getElementById("bookSlot").value;
+
+    if (
+        selectedLab.trim() === "" ||
+        selectedDate.trim() === "" ||
+        selectedSlot.trim() === ""
+    ) {
+
+        document.getElementById("bookingResult")
+        .innerHTML =
+        "<div style='color:red;font-weight:bold;'>❌ Please select all fields</div>";
+
+        return;
+    }
+
+    const params =
+        "lab=" + encodeURIComponent(selectedLab)
+        + "&date=" + encodeURIComponent(selectedDate)
+        + "&slot=" + encodeURIComponent(selectedSlot);
+
+    fetch("/CLMS/BookLabServlet", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type":
+            "application/x-www-form-urlencoded"
+        },
+
+        body: params
+    })
+
+    .then(res => res.text())
+
+    .then(data => {
+
+        document.getElementById("bookingResult")
+        .innerHTML = data;
+
+        checkAvailability();
+        loadBookings();
+    });
+
+});
+
+</script>
+
+<!-- LOAD BOOKINGS -->
+<script>
+
+function loadBookings() {
+
+    fetch("/CLMS/ViewBookingsServlet")
+
+    .then(res => res.text())
+
+    .then(data => {
+
+        document.getElementById("activeBookings")
+        .innerHTML = data;
+    });
+}
+
+loadBookings();
+
+setInterval(loadBookings, 30000);
+
+</script>
+
+<!-- LOAD LAB TIMETABLE -->
+<script>
+
+function loadLabTimetable() {
+
+    const lab =
+        document.getElementById('labTTDropdown').value;
+
+    if (!lab) {
+
+        alert('Select lab first');
+        return;
+    }
+
+    fetch(`/CLMS/LabTimetableServlet?lab=${lab}`)
+
+    .then(res => res.text())
+
+    .then(data => {
+
+        document.getElementById('labTTResult')
+        .innerHTML = data;
+    });
+}
+
+</script>
+
+<!-- LAB FREE -->
+<script>
+
+function showLabFree() {
+
+    const lab =
+        document.getElementById("labTTDropdown").value;
+
+    if (!lab) {
+
+        alert("Select lab first");
+        return;
+    }
+
+    fetch(`/CLMS/LabFreeServlet?lab=${lab}`)
+
+    .then(res => res.text())
+
+    .then(data => {
+
+        document.getElementById("labStatusResult")
+        .innerHTML = data;
+    })
+
+    .catch(err => {
+
+        console.log(err);
+
+        document.getElementById("labStatusResult")
+        .innerHTML =
+        "<div style='color:red;'>❌ Error loading free slots</div>";
+    });
+}
+
+</script>
+
+<!-- LAB BUSY -->
+<script>
+
+function showLabBusy() {
+
+    const lab =
+        document.getElementById("labTTDropdown").value;
+
+    if (!lab) {
+
+        alert("Select lab first");
+        return;
+    }
+
+    fetch(`/CLMS/LabBusyServlet?lab=${lab}`)
+
+    .then(res => res.text())
+
+    .then(data => {
+
+        document.getElementById("labStatusResult")
+        .innerHTML = data;
+    })
+
+    .catch(err => {
+
+        console.log(err);
+
+        document.getElementById("labStatusResult")
+        .innerHTML =
+        "<div style='color:red;'>❌ Error loading busy slots</div>";
+    });
+}
+
+</script>
+<script>
+
+document.getElementById("issueType")
+.addEventListener("change", function() {
+
+    const customBox =
+        document.getElementById("customIssue");
+
+    if (this.value === "OTHER") {
+
+        customBox.style.display = "block";
+
+    } else {
+
+        customBox.style.display = "none";
+    }
+});
+
+</script>
+<script>
+
+document.getElementById("issueForm")
+.addEventListener("submit", function(e) {
+
+e.preventDefault();
+
+const lab =
+document.getElementById("issueLab").value;
+
+const systemNo =
+document.getElementById("systemNo").value;
+
+const issueType =
+document.getElementById("issueType").value;
+
+const customIssue =
+document.getElementById("customIssue").value;
+
+const params =
+
+"lab=" + encodeURIComponent(lab)
+
++
+
+"&systemNo=" +
+encodeURIComponent(systemNo)
+
++
+
+"&issueType=" +
+encodeURIComponent(issueType)
+
++
+
+"&customIssue=" +
+encodeURIComponent(customIssue);
+
+fetch("/CLMS/ReportIssueServlet", {
+
+method: "POST",
+
+headers: {
+"Content-Type":
+"application/x-www-form-urlencoded"
+},
+
+body: params
+
+})
+
+.then(res => res.text())
+
+.then(res => res.text())
+
+.then(data => {
+
+alert(data);
+
+document.getElementById("issueForm").reset();
+
+document.getElementById("customIssue")
+.style.display = "none";
+
+loadFacultyIssues();
+
+});
+
+});
+
+</script>
+<script>
+
+function loadFacultyIssues() {
+
+fetch("/CLMS/ViewFacultyIssuesServlet")
+
+.then(res => res.text())
+
+.then(data => {
+
+document.getElementById("facultyIssueTable")
+.innerHTML = data;
+
+});
+}
+
+loadFacultyIssues();
+
+setInterval(loadFacultyIssues, 3000);
+
+</script>
+<script>
+
+function deleteEntry(id) {
+
+  if (confirm('Delete this entry?')) {
+
+    fetch('/CLMS/DeleteTimetableEntryServlet?id=' + id)
+
+    .then(res => res.text())
+
+    .then(data => {
+
+      showMessage('Entry deleted successfully', 'success');
+
+      loadEditTable();
+    })
+
+    .catch(err => {
+
+      showMessage('Error deleting entry', 'error');
+    });
+  }
+}
+
+</script>
+<script>
+
+function escapeHtml(text) {
+
+  if(text == null) return '';
+
+  return text
+    .toString()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+</script>
+<script>
+
+function confirmIssue(id, status){
+
+    fetch("/CLMS/ConfirmIssueServlet", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type":
+            "application/x-www-form-urlencoded"
+        },
+
+        body:
+            "id=" + id +
+            "&status=" + status
+    })
+
+    .then(res => res.text())
+
+    .then(data => {
+
+        alert(data);
+
+        loadFacultyIssues();
+    })
+
+    .catch(err => {
+
+        console.log(err);
+
+        alert("Error updating issue");
+    });
+}
+
+</script>
+<script>
+
+function deleteEntireTimetable() {
+
+    fetch("/CLMS/DeleteEntireTimetableServlet", {
+
+        method: "POST"
+    })
+
+    .then(res => res.text())
+
+    .then(data => {
+
+        alert(data);
+
+        loadTimetable();
+        loadEditTable();
+    })
+
+    .catch(err => {
+
+        console.log(err);
+
+        alert("Error deleting timetable");
+    });
+}
+
+</script>
+</body>
+</html>

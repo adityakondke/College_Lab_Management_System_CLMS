@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CLMS Login</title>
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(11,61,109,0.94),
+    rgba(30,42,56,0.92)
+  ),
+  url('assets/college-bg.jpg');
+
+  background-size:cover;
+  background-position:center;
+  overflow:hidden;
+  position:relative;
+}
+
+/* DARK OVERLAY */
+
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.15);
+  backdrop-filter:blur(2px);
+}
+
+/* LOGIN CARD */
+
+.login-container{
+
+  position:relative;
+  z-index:10;
+
+  width:420px;
+
+  background:rgba(255,255,255,0.12);
+
+  border:1px solid rgba(255,255,255,0.2);
+
+  backdrop-filter:blur(16px);
+
+  border-radius:24px;
+
+  padding:45px;
+
+  box-shadow:
+  0 20px 50px rgba(0,0,0,0.35);
+
+  animation:fadeUp 0.8s ease;
+}
+
+/* LOGO */
+
+.logo-box{
+  text-align:center;
+  margin-bottom:15px;
+}
+
+.logo-box img{
+  width:85px;
+}
+
+/* TITLE */
+
+h2{
+  text-align:center;
+  font-size:34px;
+  margin-bottom:8px;
+  color:white;
+}
+
+.subtitle{
+  text-align:center;
+  color:rgba(255,255,255,0.75);
+  font-size:14px;
+  margin-bottom:30px;
+}
+
+/* ERROR */
+
+.error{
+  color:#ffb3b3;
+  font-size:14px;
+  text-align:center;
+  margin-bottom:15px;
+  font-weight:500;
+}
+
+/* INPUT */
+
+.input-group{
+  margin-bottom:22px;
+}
+
+.input-group label{
+  display:block;
+  margin-bottom:8px;
+  color:white;
+  font-size:14px;
+  font-weight:500;
+}
+
+.input-box{
+  position:relative;
+}
+
+.input-box input{
+  width:100%;
+  padding:15px 50px 15px 18px;
+
+  border:none;
+  outline:none;
+
+  border-radius:14px;
+
+  background:rgba(255,255,255,0.15);
+
+  color:white;
+
+  font-size:15px;
+
+  transition:0.3s;
+}
+
+.input-box input::placeholder{
+  color:rgba(255,255,255,0.7);
+}
+
+.input-box input:focus{
+  background:rgba(255,255,255,0.22);
+
+  box-shadow:
+  0 0 0 3px rgba(255,255,255,0.12);
+}
+
+/* ICON */
+
+.input-box i{
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  color:white;
+  font-size:18px;
+}
+
+/* TOGGLE */
+
+.toggle{
+  position:absolute;
+  right:45px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  color:white;
+  font-size:13px;
+  font-weight:500;
+}
+
+/* BUTTON */
+
+button{
+  width:100%;
+
+  padding:15px;
+
+  border:none;
+  border-radius:14px;
+
+  background:white;
+  color:#0b3d6d;
+
+  font-size:16px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+
+  background:#f1f1f1;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* FOOTER */
+
+.footer{
+  margin-top:25px;
+  text-align:center;
+  color:rgba(255,255,255,0.7);
+  font-size:13px;
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+  .login-container{
+    width:90%;
+    padding:35px 25px;
+  }
+
+  h2{
+    font-size:28px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+  <!-- LOGO -->
+
+  <div class="logo-box">
+    <img src="assets/logo.png" alt="College Logo">
+  </div>
+
+  <!-- TITLE -->
+
+  <h2>CLMS Login</h2>
+
+  <p class="subtitle">
+    College Lab Management System
+  </p>
+
+  <!-- ERROR -->
+
+  <div id="errorMsg" class="error"></div>
+
+  <!-- FORM -->
+
+  <form action="/CLMS/LoginServlet" method="post">
+
+    <!-- EMAIL -->
+
+    <div class="input-group">
+
+      <label>Email Address</label>
+
+      <div class="input-box">
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter Email"
+          required
+        >
+
+        <i class="ri-mail-line"></i>
+
+      </div>
+
+    </div>
+
+    <!-- PASSWORD -->
+
+    <div class="input-group">
+
+      <label>Password</label>
+
+      <div class="input-box">
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter Password"
+          required
+        >
+
+        <span class="toggle"
+              onclick="togglePassword()">
+          Show
+        </span>
+
+        <i class="ri-lock-password-line"></i>
+
+      </div>
+
+    </div>
+
+    <!-- BUTTON -->
+
+    <button type="submit">
+      Login
+    </button>
+
+  </form>
+
+  <!-- FOOTER -->
+
+  <div class="footer">
+    Secure Access for HOD, Faculty & Technician
+  </div>
+
+</div>
+
+<script>
+
+function togglePassword() {
+
+  const pass =
+      document.getElementById("password");
+
+  const toggle =
+      document.querySelector(".toggle");
+
+  if (pass.type === "password") {
+
+    pass.type = "text";
+
+    toggle.innerText = "Hide";
+
+  } else {
+
+    pass.type = "password";
+
+    toggle.innerText = "Show";
+  }
+}
+
+/* SHOW ERROR */
+
+const params =
+      new URLSearchParams(window.location.search);
+
+if (params.get("error")) {
+
+  document.getElementById("errorMsg")
+  .innerText =
+  "Invalid email or password!";
+}
+
+</script>
+
+</body>
+</html>

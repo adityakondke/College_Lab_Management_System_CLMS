@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Management System</title>
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #f5f7fb;
+  color: #1e2a38;
+}
+
+/* TOP BAR */
+.topbar {
+  background: #0b3d6d;
+  color: white;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* HERO */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 60px;
+  background: white;
+}
+
+.logo {
+  width: 150px;
+}
+
+.naac {
+  width: 140px;
+}
+
+.hero-text {
+  text-align: center;
+  max-width: 700px;
+}
+
+.hero-text h3 {
+  color: #0b3d6d;
+  font-weight: 500;
+}
+
+.hero-text h1 {
+  font-size: 28px;
+  margin: 10px 0;
+}
+
+.tag {
+  color: #d41b1b;
+  font-size: 14px;
+}
+
+.address {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.code-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 15px;
+  background: #0b3d6d;
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* DIVIDER */
+.divider {
+  height: 3px;
+  background: linear-gradient(to right, #0b3d6d, #1e2a38);
+}
+
+/* SYSTEM SECTION */
+.system {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px;
+  background: linear-gradient(135deg, #0b3d6d, #1e2a38);
+  color: white;
+}
+
+.system .left {
+  max-width: 500px;
+}
+
+.system h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.system p {
+  margin-bottom: 20px;
+}
+
+.login-btn {
+  padding: 12px 25px;
+  background: white;
+  color: #0b3d6d;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.login-btn:hover {
+  background: #ddd;
+}
+
+.dashboard-preview{
+  width:650px;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 20px 40px rgba(0,0,0,0.35);
+  border:1px solid rgba(255,255,255,0.15);
+}
+
+.dashboard-preview img{
+  width:100%;
+  display:block;
+  border-radius:18px;
+}
+
+@keyframes floatCard{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-10px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+}
+
+/* FEATURES */
+.features {
+  padding: 60px;
+  text-align: center;
+}
+
+.features h2 {
+  margin-bottom: 30px;
+  font-size: 26px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  width: 250px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.icon {
+  font-size: 28px;
+  color: #0b3d6d;
+  margin-bottom: 10px;
+}
+
+/* ABOUT */
+.about {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px;
+  gap: 40px;
+}
+
+.about-left {
+  max-width: 500px;
+}
+
+.about h2 {
+  margin-bottom: 10px;
+}
+
+.about-right img {
+  width: 300px;
+}
+
+/* FOOTER */
+footer {
+  background: #1e2a38;
+  color: white;
+  padding: 30px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-left img {
+  width: 60px;
+}
+
+.copy, .links {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .system {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>📞 0240-2367576</span>
+  <span>✉ registrar@dietms.org</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="assets/logo.png" class="logo">
+
+  <div class="hero-text">
+    <h3>Marathwada Shikshan Prasarak Mandal’s</h3>
+    <h1>Deogiri Institute of Engineering and Management Studies</h1>
+    <p class="tag">(An Autonomous Institute)</p>
+
+    <p class="address">
+      Chh. Sambhajinagar, Maharashtra - 431005
+    </p>
+
+    <div class="code-btn">EN 2114 | MB 2114</div>
+  </div>
+
+  <img src="assets/naac.png" class="naac">
+</section>
+
+<div class="divider"></div>
+
+<!-- SYSTEM -->
+<section class="system">
+  <div class="left">
+    <h1>College Lab Management System</h1>
+    <p>Smart way to manage labs, issues and resources efficiently.</p>
+
+    <a href="login.html" class="login-btn">Login</a>
+  </div>
+
+  <div class="right dashboard-preview">
+
+  <img src="assets/hod-dashboard.png" alt="Dashboard Preview">
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="features">
+  <h2>Key Features</h2>
+
+  <div class="grid">
+    <div class="card">
+      <i class="ri-user-settings-line icon"></i>
+      <h3>Role-Based Access</h3>
+      <p>Secure roles for HOD, Faculty and Technician.</p>
+    </div>
+
+    <div class="card">
+      <i class="ri-calendar-line icon"></i>
+      <h3>Lab Scheduling</h3>
+      <p>Organize and manage lab sessions efficiently.</p>
+    </div>
+
+    <div class="card">
+      <i class="ri-computer-line icon"></i>
+      <h3>Equipment Management</h3>
+      <p>Track and maintain lab equipment easily.</p>
+    </div>
+
+    <div class="card">
+      <i class="ri-error-warning-line icon"></i>
+      <h3>Issue Tracking</h3>
+      <p>Report and resolve issues in real-time.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-left">
+    <h2>About Our System</h2>
+    <p>
+      A centralized platform to manage lab operations, streamline communication,
+      and ensure smooth functioning of academic labs.
+    </p>
+  </div>
+
+  <div class="about-right">
+    <img src="assets/about.png">
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+
+    <div class="footer-left">
+      <img src="assets/logo.png">
+      <h3>Deogiri Institute of Engineering and Management Studies</h3>
+    </div>
+
+    <div class="footer-right">
+      <p>Contact us at:</p>
+      <p><a href="https://www.dietms.org/" style="color:white;">www.dietms.org</a></p>
+      <p>Mobile No.: 0240-2367576</p>
+    </div>
+
+  </div>
+
+  <p class="copy">
+    © 2026 Deogiri College, Chh. Sambhajinagar, Maharashtra. All rights reserved.
+  </p>
+
+  <p class="links">
+    Privacy Policy | Terms of Service | Support
+  </p>
+</footer>
+
+</body>
+</html>
